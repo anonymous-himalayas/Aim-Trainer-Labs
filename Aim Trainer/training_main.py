@@ -1,5 +1,5 @@
-
 import pygame
+import math
 import random
 import time
 from Targets import Target
@@ -8,17 +8,18 @@ from Targets import Target
 WIDTH, HEIGHT = 800, 600
 TARGET_TIME = 600
 TARGET_PADDING = 30
-
+TOTAL_LIVES = 3
 
 def draw_board(win, targets):
     win.fill((0,0,0))
     for target in targets:
         target.draw_target(win)
     
-    pygame.display.update()
 
 def draw_top(window, current_time, score, misses):
-    pass
+    pygame.draw.rect(window, 'grey', (0,0, WIDTH, 50))
+    time_label = pygame.font.SysFont('arial', 24).render(f'Time: {int(current_time // 60):02d}:{int(round(current_time % 60, 1))}.{math.floor(int(current_time * 1000 % 1000) / 100)}', 1, 'black')
+    window.blit(time_label, (5, 5), )
 
 
 def main():
@@ -41,6 +42,7 @@ def main():
         clock.tick(60)
         click = False
         mouse_position = pygame.mouse.get_pos()
+        current_time = time.time() - start_time
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -67,8 +69,14 @@ def main():
             if click and target.collide(*mouse_position):
                 targets.remove(target)
                 target_points += 1
-
+        
+        if misses >= TOTAL_LIVES:
+            pass
+        
+    
         draw_board(window, targets)
+        draw_top(window, current_time, target_points, misses) 
+        pygame.display.update()
 
     pygame.quit()
     
