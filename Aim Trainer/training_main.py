@@ -28,6 +28,29 @@ def draw_top(window, current_time, score, misses):
     window.blit(hits_label, (450, 5))
     window.blit(lives_label, (650, 5))
 
+def middle(window):
+    return WIDTH / 2 - window.get_width() / 2
+
+def end_screen(window, current_time, score, clicks):
+    window.blit((0,0,0))
+    time_label = pygame.font.SysFont('arial', 24).render(f'Time: {int(current_time // 60):02d}:{int(round(current_time % 60, 1))}.{math.floor(int(current_time * 1000 % 1000) / 100)}', 1, 'black')
+    speed = round(score / current_time, 1)
+    speed_label = pygame.font.SysFont('arial', 24).render(f'Speed: {speed} t/s', 1, 'black')
+    acc = round(score / clicks * 100, 1)
+    acc_label = pygame.font.SysFont('arial', 24).render(f'Accuracy: {acc}%', 1, 'black')
+    hits_label = pygame.font.SysFont('arial', 24).render(f'Hits: {score}', 1, 'black')
+    window.blit(time_label, (middle(time_label), 5))
+    window.blit(speed_label, (middle(speed_label), 5))
+    window.blit(hits_label, (middle(hits_label), 5))
+    window.blit(acc_label, (middle(acc_label), 5))
+
+    pygame.display.update()
+
+    clock = pygame.time.Clock()
+    clock.tick(1)
+    for _ in range(10000):
+        pass
+
 def main():
     pygame.init()
     window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -78,7 +101,7 @@ def main():
             
         
         if misses >= TOTAL_LIVES:
-            pass
+            end_screen(window, current_time, target_points, clicks)
         
     
         draw_board(window, targets)
