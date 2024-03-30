@@ -17,6 +17,10 @@ def draw_board(win, targets):
     
     pygame.display.update()
 
+def draw_top(window, current_time, score, misses):
+    pass
+
+
 def main():
     pygame.init()
     window = pygame.display.set_mode((WIDTH, HEIGHT))
