@@ -43,7 +43,7 @@ def end_screen(window, current_time, score, clicks):
     hits_label = pygame.font.SysFont('arial', 24).render(f'Hits: {score}', 1, 'red')
     game_over = pygame.font.SysFont('arial', 40).render(f'GAME OVER', 1, 'red')
     window.blit(game_over, (middle(game_over), 100))
-    window.blit(time_label, (middle(time_label), 300))
+    window.blit(time_label, (middle(time_label), 200))
     window.blit(speed_label, (middle(speed_label), 300))
     window.blit(hits_label, (middle(hits_label), 400))
     window.blit(acc_label, (middle(acc_label), 500))
