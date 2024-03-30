@@ -19,8 +19,14 @@ def draw_board(win, targets):
 def draw_top(window, current_time, score, misses):
     pygame.draw.rect(window, 'grey', (0,0, WIDTH, 50))
     time_label = pygame.font.SysFont('arial', 24).render(f'Time: {int(current_time // 60):02d}:{int(round(current_time % 60, 1))}.{math.floor(int(current_time * 1000 % 1000) / 100)}', 1, 'black')
-    window.blit(time_label, (5, 5), )
-
+    speed = round(score / current_time, 1)
+    speed_label = pygame.font.SysFont('arial', 24).render(f'Speed: {speed} t/s', 1, 'black')
+    lives_label = pygame.font.SysFont('arial', 24).render(f'Lives: {TOTAL_LIVES - misses}', 1, 'black')
+    hits_label = pygame.font.SysFont('arial', 24).render(f'Hits: {score}', 1, 'black')
+    window.blit(time_label, (5, 5))
+    window.blit(speed_label, (200, 5))
+    window.blit(hits_label, (450, 5))
+    window.blit(lives_label, (650, 5))
 
 def main():
     pygame.init()
@@ -51,7 +57,7 @@ def main():
             
             if event.type == pygame.USEREVENT:
                 x = random.randint(TARGET_PADDING, WIDTH - TARGET_PADDING)
-                y = random.randint(TARGET_PADDING, HEIGHT - TARGET_PADDING)
+                y = random.randint(TARGET_PADDING + 50, HEIGHT - TARGET_PADDING)
                 target = Target(x, y)
                 targets.append(target)
             
@@ -69,6 +75,7 @@ def main():
             if click and target.collide(*mouse_position):
                 targets.remove(target)
                 target_points += 1
+            
         
         if misses >= TOTAL_LIVES:
             pass
