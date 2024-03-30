@@ -30,4 +30,5 @@ class Target:
         pygame.draw.circle(win, self.INNER_COLOR, (self.x_coord, self.y_coord), self.size * 0.4)
                            
     def collide(self, x, y):
-        pass
+        distance = math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
+        return distance <= self.size
