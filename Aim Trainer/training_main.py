@@ -54,10 +54,11 @@ def end_screen(window, current_time, score, clicks):
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
-                quit()
+                return
+
 def main():
     pygame.init()
-    window = pygame.display.set_mode((WIDTH, HEIGHT))
+    window = pygame.display.set_mode([WIDTH, HEIGHT])
     pygame.display.set_caption('Aim Trainer')
 
     run = True
@@ -106,6 +107,7 @@ def main():
         
         if misses >= TOTAL_LIVES:
             end_screen(window, current_time, target_points, clicks)
+            run = False
         
     
         draw_board(window, targets)
